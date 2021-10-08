@@ -1,5 +1,6 @@
 package ru.jeinmentalist.mail.shopinglist.domain
 
+import androidx.lifecycle.LiveData
 import ru.jeinmentalist.mail.shopinglist.domain.model.ShopItem
 
 interface ShopListRepository {
@@ -12,6 +13,6 @@ interface ShopListRepository {
 
     fun getShopItem(shopItemId: Int): ShopItem
 
-    fun getShopList(): List<ShopItem>
+    fun getShopList(): LiveData<List<ShopItem>>
 
 }
