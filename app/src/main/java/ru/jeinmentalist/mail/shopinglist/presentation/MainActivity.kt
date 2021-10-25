@@ -1,19 +1,19 @@
 package ru.jeinmentalist.mail.shopinglist.presentation
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ru.jeinmentalist.mail.shopinglist.R
-import ru.jeinmentalist.mail.shopinglist.domain.model.ShopItem
+
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mViewModel: MainViewModel
     private lateinit var mAdapter: ShopListAdapter
-    var count = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +22,11 @@ class MainActivity : AppCompatActivity() {
         mViewModel = ViewModelProvider(this)[MainViewModel::class.java]
         mViewModel.shopList.observe(this){
             mAdapter.submitList(it)
+        }
+        val buttonAddItem = findViewById<FloatingActionButton>(R.id.button_add_shop_item)
+        buttonAddItem.setOnClickListener{
+            val intent = ShopItemActivity.newIntentAdd(this)
+            startActivity(intent)
         }
     }
 
@@ -72,7 +77,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupOnClickListener() {
         mAdapter.onShopItemOnClickListener = {
-            Log.d("sldfjdfkj", it.name)
+            val intent = ShopItemActivity.newIntentEdit(this, it.id)
+            startActivity(intent)
         }
     }
 
